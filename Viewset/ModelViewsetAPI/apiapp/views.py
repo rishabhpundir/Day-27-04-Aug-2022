@@ -7,8 +7,8 @@ from rest_framework.permissions import IsAuthenticated
 class UserModelViewset(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    # authentication_classes = [BasicAuthentication]   # setting added in settings.py file
-    # permission_classes = [IsAuthenticated]
+    authentication_classes = [BasicAuthentication]   # setting added in settings.py file
+    permission_classes = [IsAuthenticated]
 
 # class UserReadOnlyModelViewset(viewsets.ReadOnlyModelViewSet):
 #     queryset = User.objects.all()

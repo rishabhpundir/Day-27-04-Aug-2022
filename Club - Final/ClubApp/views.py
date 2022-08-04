@@ -17,11 +17,11 @@ from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 
 # Creating api view for the Events
-class EventModelViewsetAPI(viewsets.ReadOnlyModelViewSet):
+class EventModelViewsetAPI(viewsets.ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
-    # authentication_classes = [BasicAuthentication]  
-    # permission_classes = [IsAuthenticated]
+    authentication_classes = [BasicAuthentication]  
+    permission_classes = [IsAuthenticated]
 
 # Displaying all events on the homepage
 def home(request):
