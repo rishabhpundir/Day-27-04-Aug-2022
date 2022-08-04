@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% get_media_prefix as MEDIA_URL %}
+{% block title %}Klub™ | Event Details{% endblock title %}
+{% block body %}
+<div class="container mb-5 width: 100%">
+    <div class="text-center mt-3 mb-5">
+        <h1><strong>{{event.event_name}}</strong></h1>
+    </div>
+    {% if updated %}
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Event updated successfully.</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    {% endif %}
+    <div class="row text-center">
+        <div class="card mt-2" style="width: 100%;">
+            <div class="img-container mt-3"><img class="card-img-top" style="width: 50%;"
+                    src="{% get_media_prefix %}{{event.venue_image}}"></div>
+            <div class="card-body">
+                <h5 class="card-title text-center"><strong>{{event.description}}</strong></h5>
+                <p class="card-text">
+                <ul class="my-3 text-left">
+                    <li><strong>DATE : </strong>{{event.event_date}}</li>
+                    <li><strong>DAYS LEFT: </strong>{{event.Days_Left}} <strong>({{event.Time_Left}})</strong></li>
+                    <li><strong>VENUE : </strong>{{event.venue}}</li>
+                    <li><strong>EVENT MANAGER : </strong>{{event.event_manager}}</li>
+                    <li><strong>EVENT CREATOR : </strong>{{event.event_creator}}</li>
+                </ul>
+                </p>
+                {% if user.is_authenticated %}
+                <div class="container">
+                    {% if user.get_username == event.event_creator or user.get_username == 'admin' %}
+                    <a href="{% url 'update_event_link' event.id %}" class="btn btn-secondary mt-1 py-1">Update</a>
+                    <a href="{% url 'delete_event_link' event.id %}" class="btn btn-danger mt-1 py-1">Delete</a>
+                    {% else %}
+                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                       <h6><strong>{{user.get_username}}</strong>, You cannot Update or Delete this event as you are not its creator.</h6>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {% endif %}
+                </div>
+                {% else %}
+                <strong>To edit events, <a href="{% url 'register_link' %}">Register</a> Or <a
+                        href="{% url 'login_link' %}">Login</a> here.</strong>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock body %}
